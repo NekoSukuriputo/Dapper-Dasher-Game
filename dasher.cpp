@@ -12,13 +12,16 @@ int main()
     // acceleration due to grafity (pixels/frame)/frame
     const int gravity{1};
 
+    Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    Rectangle scarfyRec;
+    Vector2 scarfyPos;
     // rectangle dimentions
     const int width{50};
     const int height{80};
 
-    //is ractacle in the air
+    // is ractacle in the air
     bool isInAir{};
-    //jump velocity
+    // jump velocity
     const int jumpVel{-22};
 
     int posY{windowHeight - height};
@@ -29,7 +32,7 @@ int main()
 
     while (!WindowShouldClose())
     {
-         // start drawing
+        // start drawing
         BeginDrawing();
         ClearBackground(WHITE);
 
@@ -56,11 +59,10 @@ int main()
         // update the position
         posY += velocity;
 
-        DrawRectangle(windowWidth/2, posY, width, height, BLUE);
+        DrawRectangle(windowWidth / 2, posY, width, height, BLUE);
 
         // stop drawing
         EndDrawing();
-
     }
 
     CloseWindow();
