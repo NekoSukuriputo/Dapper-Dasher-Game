@@ -55,14 +55,14 @@ int main()
     {
         nebulae[i].rec.x = 0.0;
         nebulae[i].rec.y = 0.0;
-        nebulae[i].rec.width = nebula.width/8;
-        nebulae[i].rec.height = nebula.height/8;
-        nebulae[i].pos.y = windowDimensions[1] - nebula.height/8;
+        nebulae[i].rec.width = nebula.width / 8;
+        nebulae[i].rec.height = nebula.height / 8;
+        nebulae[i].pos.y = windowDimensions[1] - nebula.height / 8;
         nebulae[i].frame = 0;
         nebulae[i].runningTime = 0.0;
         nebulae[i].updateTime = 0.0;
 
-        nebulae[i].pos.x =  windowDimensions[0] + i * 300;
+        nebulae[i].pos.x = windowDimensions[0] + i * 300;
     }
 
     // nebula X velocity (pixels/second)
@@ -71,14 +71,14 @@ int main()
     // scarfy variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
     AnimData scarfyData;
-    scarfyData.rec.width = scarfy.width/6;
+    scarfyData.rec.width = scarfy.width / 6;
     scarfyData.rec.height = scarfy.height;
     scarfyData.rec.x = 0;
     scarfyData.rec.y = 0;
-    scarfyData.pos.x = windowDimensions[0]/2 - scarfyData.rec.width/2;
+    scarfyData.pos.x = windowDimensions[0] / 2 - scarfyData.rec.width / 2;
     scarfyData.pos.y = windowDimensions[1] - scarfyData.rec.height;
     scarfyData.frame = 0;
-    scarfyData.updateTime = 1.0/12.0;
+    scarfyData.updateTime = 1.0 / 12.0;
     scarfyData.runningTime = 0.0;
 
     // is the rectanlge in the air?
@@ -87,6 +87,9 @@ int main()
     const int jumpVel{-600};
 
     int velocity{0};
+
+    Texture2D background = LoadTexture("textures/far-buildings.png");
+    float bgX{};
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -97,6 +100,12 @@ int main()
         // start drawing
         BeginDrawing();
         ClearBackground(WHITE);
+
+        bgX -= 20 * dT;
+
+        // draw the background
+        Vector2 bgPos{bgX, 0.0};
+        DrawTextureEx(background, bgPos, 0.0, 2.0, WHITE);
 
         // perform ground check
         if (isOnGround(scarfyData, windowDimensions[1]))
@@ -117,7 +126,6 @@ int main()
         {
             velocity += jumpVel;
         }
-
 
         for (int i = 0; i < sizeOfNebulae; i++)
         {
@@ -153,5 +161,6 @@ int main()
     }
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
+    UnloadTexture(background);
     CloseWindow();
 }
