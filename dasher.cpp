@@ -29,12 +29,17 @@ int main()
     Vector2 nebulaPos{windowWidth, windowHeight - nebulaRec.height};
 
     // nebula velocity
-    int nebVal{-600};
+    int nebVel{-200};
 
     // animation frame
     int frame{};
     const float updateTime{1.0 / 12.0};
     float runningTime{};
+
+    // nebula anim
+    int nebFrame{};
+    const float nebUpdateTime(1.0 / 12.0);
+    float nebRunningTime{};
 
     // is ractacle in the air
     bool isInAir{};
@@ -76,9 +81,11 @@ int main()
         }
 
         // update nebula position
-        nebulaPos.x += nebVal * dT;
+        nebulaPos.x += nebVel * dT;
         // update the position
         scarfyPos.y += velocity * dT;
+
+        // update scary animation frame
 
         if (!isInAir)
         {
@@ -96,6 +103,21 @@ int main()
                 }
             }
         }
+
+        // update nebula animation frame
+        nebRunningTime += dT;
+        if (nebRunningTime >= nebUpdateTime)
+        {
+            nebRunningTime = 0;
+            nebulaRec.x = nebFrame * nebulaRec.width;
+            nebFrame++;
+
+            if (nebFrame > 7)
+            {
+                nebFrame = 0;
+            }
+        }
+
         // draw nebula
         DrawTextureRec(nebula, nebulaRec, nebulaPos, WHITE);
         // draw scarfy
