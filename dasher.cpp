@@ -28,8 +28,8 @@ int main()
     Rectangle nebulaRec{0.0, 0.0, nebula.width / 8, nebula.height / 8};
     Vector2 nebulaPos{windowWidth, windowHeight - nebulaRec.height};
 
-    // nebula velocity
-    int nebVel{-200};
+    Rectangle nebula2Rec{0.0, 0.0, nebula.width / 8, nebula.height / 8};
+    Vector2 neb2Pos{windowWidth + 300, windowHeight - nebulaRec.height};
 
     // animation frame
     int frame{};
@@ -41,10 +41,17 @@ int main()
     const float nebUpdateTime(1.0 / 12.0);
     float nebRunningTime{};
 
+    int neb2Frame{};
+    const float neb2UpdateTime(1.0 / 16.0);
+    float neb2RunningTime{};
+
     // is ractacle in the air
     bool isInAir{};
     // jump velocity {pixel/s}
     const int jumpVel{-600};
+
+    // nebula velocity
+    int nebVel{-200};
 
     int velocity{0};
 
@@ -82,6 +89,9 @@ int main()
 
         // update nebula position
         nebulaPos.x += nebVel * dT;
+
+        // neb 2
+        neb2Pos.x += nebVel * dT;
         // update the position
         scarfyPos.y += velocity * dT;
 
@@ -118,8 +128,23 @@ int main()
             }
         }
 
+        // update nebula2 animation frame
+        neb2RunningTime += dT;
+        if (neb2RunningTime >= neb2UpdateTime)
+        {
+            neb2RunningTime = 0;
+            nebula2Rec.x = neb2Frame * nebula2Rec.width;
+            neb2Frame++;
+
+            if (neb2Frame > 7)
+            {
+                neb2Frame = 0;
+            }
+        }
+
         // draw nebula
         DrawTextureRec(nebula, nebulaRec, nebulaPos, WHITE);
+        DrawTextureRec(nebula, nebula2Rec, neb2Pos, RED);
         // draw scarfy
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
